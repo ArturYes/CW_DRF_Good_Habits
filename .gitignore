@@ -1,0 +1,6 @@
+# PyCharm and venv
+.venv
+.idea
+
+# Poetry
+poetry.lock
