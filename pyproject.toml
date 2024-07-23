@@ -18,6 +18,7 @@ psycopg2 = "^2.9.9"
 django-celery-beat = "^2.6.0"
 requests = "^2.32.3"
 pillow = "^10.3.0"
+redis = "^5.0.7"
 
 
 [tool.poetry.group.dev.dependencies]
