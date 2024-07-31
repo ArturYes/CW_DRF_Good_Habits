@@ -46,7 +46,7 @@ class UserTestCase(APITestCase):
                   'email': 'testuser@example.com',
                   'is_active': True,
                   'telegram_chat_id': '1234567',
-                  'avatar': 'http://testserver/media/users/no_avatar.png'}
+                  'avatar': 'http://testserver/media/users/avatar/avatar_default.png'}
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(data, result)

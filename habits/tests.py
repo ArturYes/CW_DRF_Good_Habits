@@ -1,14 +1,9 @@
-import os
-
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 
 from habits.models import Habit
 from users.models import User
-
-
-# os.environ["DJANGO_SETTINGS_ODULE"] = "config.settings"
 
 
 class HabitTestCase(APITestCase):
@@ -159,8 +154,31 @@ class HabitTestCase(APITestCase):
             response.json()["non_field_errors"], ["Нельзя одновременно выбрать связанную привычку и вознаграждение"]
         )
 
-        data = {"related_habit": self.habit.pk, "is_nice_habit": False}
-        response = self.client.patch(reverse("habits:habit_update", args=(self.habit.pk,)), data)
+        # Создаем приятную привычку
+        related_habit = Habit.objects.create(
+            user=self.user,
+            place="Место связанной привычки",
+            time="15:00",
+            action="Действие связанной привычки",
+            periodicity="2",
+            duration_time=120,
+            is_nice_habit=True,  # Приятная привычка
+        )
+
+        # Данные создания основной привычки
+        data = {
+            "place": "Место основной привычки",
+            "time": "15:00",
+            "action": "Действие основной привычки",
+            "periodicity": "2",
+            "duration_time": 120,
+            "related_habit": related_habit.pk,
+            "is_nice_habit": False,
+        }
+
+        # Обновляем основную привычку
+        response = self.client.post(reverse("habits:habit_create"), data)
+        self.assertIn("non_field_errors", response.json())
         self.assertEqual(
             response.json()["non_field_errors"],
             ["В связанные привычки могут попадать только привычки с признаком приятной привычки"],

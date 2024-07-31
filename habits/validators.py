@@ -44,8 +44,8 @@ class HabitValidator:
                 raise ValidationError("Связанная привычка не найдена")
         else:
             is_related_habit_nice = None
-
-        if related_habit and not is_nice_habit:
+        
+        if related_habit and is_related_habit_nice:
             raise ValidationError("В связанные привычки могут попадать только привычки с признаком приятной привычки")
 
         if is_nice_habit and (related_habit or reward):

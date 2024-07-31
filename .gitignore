@@ -7,3 +7,6 @@ poetry.lock
 
 # Private data
 .env
+
+# Cache
+__pycache__/
